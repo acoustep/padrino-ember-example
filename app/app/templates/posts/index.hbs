@@ -1,0 +1,21 @@
+<h3>Latest Posts</h3>
+<table class="table table-striped">
+  <tr>
+    <th class=“col-md-3”>Title</th>
+    <th class="col-md-3">Created at</th>
+    <th class="col-md-3">Last modified</th>
+    <th class="col-md-3">Actions</th>
+  </tr>
+{{#each post in model}}
+<tr>
+  <td>{{ post.title }}</td>
+  <td>{{ post.createdAt }}</td>
+  <td>{{ post.updatedAt }}</td>
+  <td>{{#link-to 'posts.show' post classNames="btn btn-success"}}View{{/link-to}} {{#link-to 'posts.edit' post classNames="btn btn-info"}}Edit{{/link-to}} <button {{action 'delete' post}} class="btn btn-danger">Delete</button></td>
+</tr>
+{{/each}}
+</table>
+{{#link-to 'posts.new' classNames="btn btn-primary"}}
+  New Post
+{{/link-to}}
+
