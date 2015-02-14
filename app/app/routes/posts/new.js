@@ -10,5 +10,13 @@ export default Ember.Route.extend({
     if(model.get('isNew')) {
       model.destroyRecord();
     }
+  },
+  actions: {
+    save: function() {
+      var _this = this;
+      this.modelFor('posts/new').save().then(function() {
+        _this.transitionTo('posts.index');
+      });
+    }
   }
 });
