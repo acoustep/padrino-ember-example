@@ -7,7 +7,7 @@ Api::App.controllers :posts do
   end
 
   post :create, map: "api/v1/posts" do
-    parameters = JSON.parse(request.body.read)
+    parameters = post_params
     if parameters["post"].nil?
       return '{}'
     end
@@ -21,7 +21,14 @@ Api::App.controllers :posts do
   end
 
   put :update, map: "api/v1/posts/:id" do
-    @post.update params
+    @post = Post[params[:id]]
+
+    if @post.nil?
+      return '{}'
+    end
+
+    parameters = post_params
+    @post.update parameters["post"]
     render "posts/show"
 
   end
@@ -31,4 +38,9 @@ Api::App.controllers :posts do
     @post.delete unless @post.nil?
   end
 
+end
+
+
+def post_params
+  JSON.parse(request.body.read)
 end
