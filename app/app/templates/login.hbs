@@ -1,0 +1,21 @@
+<h2>Login</h2>
+<form {{action 'authenticate' on='submit'}} class="horizontal">
+  {{#if errorMessage}}
+  <div class="alert alert-danger">
+    <p>
+      <strong>Login failed:</strong> <code>{{errorMessage}}</code>
+    </p>
+  </div>
+  {{/if}}
+  <div class="form-group">
+    <label for="identification" class="control-label">Email</label>
+    {{input value=identification placeholder='Enter Email' classNames="form-control"}}
+  </div>
+  <div class="form-group">
+  <label for="password" class="control-label">Password</label>
+  {{input value=password placeholder='Enter Password' type='password' classNames="form-control"}}
+  </div>
+  <div class="form-group">
+  <button type="submit" class="btn btn-primary">Login</button>
+  </div>
+</form>

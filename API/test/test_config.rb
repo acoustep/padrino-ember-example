@@ -1,6 +1,8 @@
 RACK_ENV = 'test' unless defined?(RACK_ENV)
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
+require "minitest/reporters"
 Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&method(:require))
+Minitest::Reporters.use!
 
 class MiniTest::Spec
   include Rack::Test::Methods

@@ -16,7 +16,7 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
   };
 
   if (environment === 'development') {
@@ -42,6 +42,14 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
   }
-
+  ENV['simple-auth-devise'] = {
+    serverTokenEndpoint: '/api/v1/users/sign_in',
+    tokenAttributeName: 'authentication_token',
+    identificationAttributeName: 'email',
+  };
+  ENV['simple-auth'] = {
+    routeAfterAuthentication: 'posts.index',
+    routeIfAlreadyAuthenticated: 'posts.index'
+  };
   return ENV;
 };

@@ -1,9 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../test_config.rb')
 
-describe "Api::App::PostsHelper" do
+describe "Api::App::UsersHelper" do
   before do
     @helpers = Class.new
-    @helpers.extend Api::App::PostsHelper
+    @helpers.extend Api::App::UsersHelper
   end
 
   def helpers
