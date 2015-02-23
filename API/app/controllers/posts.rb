@@ -1,12 +1,12 @@
 require 'json'
-Api::App.controllers :posts do
+Api::App.controllers :posts, map: "api/v1/posts" do
   
-  get :index, map: "api/v1/posts" do
+  get :index, map: "" do
     @posts = Post.all
     render "posts/index"
   end
 
-  post :create, map: "api/v1/posts" do
+  post :create, map: "" do
     parameters = post_params
     if parameters["post"].nil?
       return '{}'
@@ -15,12 +15,12 @@ Api::App.controllers :posts do
     render "posts/show"
   end
 
-  get :show, map: "api/v1/posts/:id" do
+  get :show, map: ":id" do
     @post = Post[params[:id]]
     render "posts/show"
   end
 
-  put :update, map: "api/v1/posts/:id" do
+  put :update, map: ":id" do
     @post = Post[params[:id]]
 
     if @post.nil?
@@ -33,13 +33,12 @@ Api::App.controllers :posts do
 
   end
 
-  delete :destroy, map: "api/v1/posts/:id" do
+  delete :destroy, map: ":id" do
     @post = Post[params[:id]]
     @post.delete unless @post.nil?
   end
 
 end
-
 
 def post_params
   JSON.parse(request.body.read)
