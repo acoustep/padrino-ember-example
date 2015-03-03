@@ -29,4 +29,33 @@ class User < Sequel::Model
     return
   end
 
+  def self.authenticate(environment, parser=AuthorizationStringParser)
+    credentials = parser.new(environment).parsed_string
+    return false if credentials.nil?
+
+    user = self.where(email: credentials.fetch("email", "")).first
+
+    return false unless user
+
+    return BCrypt::Password.new(user[:authentication_token]) == credentials.fetch("authentication_token", "")
+  end
+
+end
+
+class AuthorizationStringParser
+  attr_accessor :parsed_string, :environment
+  def initialize(environment)
+    @environment = environment
+  end
+
+  def parsed_string
+    parsed_string ||= parse_string
+  end
+
+  protected
+
+  def parse_string
+    raw_param_string = environment.fetch("HTTP_AUTHORIZATION", "")
+    raw_param_string.gsub(/Token\s|"|,/, "").split(' ').map { |key_value| key_value.split(%r/=(.+)?/) }.to_h
+  end
 end

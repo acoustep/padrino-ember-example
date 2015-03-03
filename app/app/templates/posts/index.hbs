@@ -11,11 +11,19 @@
   <td>{{ post.title }}</td>
   <td>{{ post.createdAt }}</td>
   <td>{{ post.updatedAt }}</td>
-  <td>{{#link-to 'posts.show' post classNames="btn btn-success"}}View{{/link-to}} {{#link-to 'posts.edit' post classNames="btn btn-info"}}Edit{{/link-to}} <button {{action 'delete' post}} class="btn btn-danger">Delete</button></td>
+  <td>
+    {{#link-to 'posts.show' post classNames="btn btn-success"}}View{{/link-to}}
+    {{#if session.isAuthenticated}}
+      {{#link-to 'posts.edit' post classNames="btn btn-info"}}Edit{{/link-to}}
+      <button {{action 'delete' post}} class="btn btn-danger">Delete</button>
+    {{/if}}
+  </td>
 </tr>
 {{/each}}
 </table>
-{{#link-to 'posts.new' classNames="btn btn-primary"}}
-  New Post
-{{/link-to}}
+{{#if session.isAuthenticated}}
+  {{#link-to 'posts.new' classNames="btn btn-primary"}}
+    New Post
+  {{/link-to}}
+{{/if}}
 

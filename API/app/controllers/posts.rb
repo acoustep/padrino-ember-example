@@ -1,7 +1,16 @@
 require 'json'
-Api::App.controllers :posts, map: "api/v1/posts" do
-  
-  get :index, map: "" do
+
+Api::App.controllers :posts, map: "api/v1/posts", conditions: {:protect => true} do
+
+  def self.protect(protected)
+    condition do
+      unless User.authenticate request.env
+        halt 403, "No secrets for you!"
+      end
+    end if protected
+  end
+
+  get :index, map: "", protect: false do
     @posts = Post.all
     render "posts/index"
   end
@@ -15,7 +24,7 @@ Api::App.controllers :posts, map: "api/v1/posts" do
     render "posts/show"
   end
 
-  get :show, map: ":id" do
+  get :show, map: ":id", protect: false do
     @post = Post[params[:id]]
     render "posts/show"
   end
@@ -43,3 +52,4 @@ end
 def post_params
   JSON.parse(request.body.read)
 end
+
