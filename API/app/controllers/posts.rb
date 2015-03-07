@@ -11,7 +11,7 @@ Api::App.controllers :posts, map: "api/v1/posts", conditions: {:protect => true}
   end
 
   get :index, map: "", protect: false do
-    @posts = Post.all
+    @posts = Post.order(Sequel.desc(:id))
     render "posts/index"
   end
 
@@ -45,6 +45,7 @@ Api::App.controllers :posts, map: "api/v1/posts", conditions: {:protect => true}
   delete :destroy, map: ":id" do
     @post = Post[params[:id]]
     @post.delete unless @post.nil?
+    return '{}'
   end
 
 end
