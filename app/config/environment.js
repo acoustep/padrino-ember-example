@@ -16,6 +16,11 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      PUSHER_OPTS: {
+        key: '146fb232637764a5cc41',
+        connection: {},
+        logAllEvents: false
+      }
     },
   };
 
@@ -53,5 +58,15 @@ module.exports = function(environment) {
     authorizer: 'simple-auth-authorizer:devise',
     authenticationRoute: 'login'
   };
+  ENV['contentSecurityPolicy'] = {
+    'default-src': "'none'",
+    'font-src': "'self' http://maxcdn.bootstrapcdn.com/",
+    'script-src': "'self' http://stats.pusher.com/",
+    'connect-src': "'self' ws://ws.pusherapp.com/", 
+    'img-src': "'self'",
+    'style-src': "'self' 'unsafe-inline' http://maxcdn.bootstrapcdn.com/",
+    'media-src': "'self'",
+  };
+
   return ENV;
 };
