@@ -1,4 +1,9 @@
 <h3>Latest Posts</h3>
+{{#if newPostsExist}}
+  <div class="alert alert-info click" {{action 'refresh'}}>
+    {{ newPostMessage }}
+  </div>
+{{/if}}
 <table class="table table-striped">
   <tr>
     <th class=“col-md-3”>Title</th>
