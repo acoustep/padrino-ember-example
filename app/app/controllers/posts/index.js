@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { Bindings } from 'ember-pusher/bindings';
 
 export default Ember.ArrayController.extend(Bindings, {
-  sortProperties: ['id'],
+  sortProperties: ['createdAt'],
   sortAscending: false,
   logPusherEvents: true,
   PUSHER_SUBSCRIPTIONS: {
@@ -21,12 +21,9 @@ export default Ember.ArrayController.extend(Bindings, {
   }.property('newPosts.@each'),
   actions: {
     newPost: function(message) {
-      var _this = this;
-      Ember.run.later((function() {
-        if(!_this.store.hasRecordForId('post', message.post.id)) {
-          _this.get('newPosts').pushObject(message.post);
-        }
-      }), 2000);
+      if(!this.store.hasRecordForId('post', message.post.id)) {
+        this.get('newPosts').pushObject(message.post);
+      }
     },
     refresh: function() {
       this.get('newPosts').forEach(function(post) {

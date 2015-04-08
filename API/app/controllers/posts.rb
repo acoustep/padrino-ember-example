@@ -20,7 +20,10 @@ Api::App.controllers :posts, map: "api/v1/posts", conditions: {:protect => true}
     if parameters["post"].nil?
       return '{}'
     end
-    @post = Post.create parameters["post"]
+    @post = Post.create parameters["post"].except("socket_id")
+
+    Pusher['posts'].trigger('new-post',  {post: @post.values}, parameters["post"]["socket_id"])
+
     render "posts/show"
   end
 
@@ -37,7 +40,7 @@ Api::App.controllers :posts, map: "api/v1/posts", conditions: {:protect => true}
     end
 
     parameters = post_params
-    @post.update parameters["post"]
+    @post.update parameters["post"].except("socket_id")
     render "posts/show"
 
   end

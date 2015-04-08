@@ -15,7 +15,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   actions: {
     save: function() {
       var _this = this;
-      this.modelFor('posts/new').save().then(function() {
+      var post = this.modelFor('posts/new')
+      
+      post.set('socketId', this.pusher.get('socketId'));
+
+      post.save().then(function() {
         _this.transitionTo('posts.index');
       });
     }
