@@ -10,15 +10,15 @@ export default Ember.ArrayController.extend(Bindings, {
   },
   newPosts: [],
   newPostCount: function() {
-    return this.get('newPosts').length;
-  }.property('newPosts.@each'),
+    return this.get('newPosts.length');
+  }.property('newPosts.length'),
   newPostsExist: function() {
     return !!this.get('newPostCount');
-  }.property('newPosts.@each'),
+  }.property('newPostCount'),
   newPostMessage: function() {
     var wording = (this.get('newPostCount') !== 1) ? "New Posts" : "New Post";
     return this.get('newPostCount') + " " + wording;
-  }.property('newPosts.@each'),
+  }.property('newPostCount'),
   actions: {
     newPost: function(message) {
       if(!this.store.hasRecordForId('post', message.post.id)) {

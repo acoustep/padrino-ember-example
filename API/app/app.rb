@@ -15,9 +15,9 @@ module Api
     end
 
     configure do
-      Pusher.app_id = '87906'
-      Pusher.key = '4fdbf9e3a2d3c8de99ea'
-      Pusher.secret = '1275165be692f65dd650'
+      Pusher.app_id = ''
+      Pusher.key = ''
+      Pusher.secret = ''
     end
   end
 end
